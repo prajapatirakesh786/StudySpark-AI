@@ -12,8 +12,8 @@ from rag_pipeline import create_vectorstore, generate_content
 from utils import parse_mcq_response, score_exam
 
 
-st.set_page_config(page_title="MCQ Generator", layout="wide")
-st.title("MCQ Generator from PDFs")
+st.set_page_config(page_title="StudySpark AI", layout="wide")
+st.title("StudySpark AI | PDF Exam Generator")
 
 
 def get_upload_signature(files):
@@ -69,7 +69,7 @@ if uploaded_files:
     signature = get_upload_signature(uploaded_files)
 
     if st.session_state.get("upload_signature") != signature:
-        with st.spinner("Reading PDFs and building vector index..."):
+        with st.spinner("Reading PDFs ..."):
             docs = build_docs(uploaded_files)
             namespace = f"upload-{signature[:16]}"
             vectorstore = create_vectorstore(docs, namespace=namespace)
