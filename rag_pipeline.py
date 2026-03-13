@@ -12,15 +12,31 @@ from prompt_template import get_prompt
 
 load_dotenv()
 
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-PINECONE_INDEX = os.getenv("PINECONE_INDEX", "mcqcreator")
-PINECONE_CLOUD = os.getenv("PINECONE_CLOUD", "aws")
-PINECONE_REGION = os.getenv("PINECONE_REGION", "us-east-1")
-HF_TOKEN = os.getenv("HF_TOKEN")
+def _get_secret(name, default=None):
+    value = os.getenv(name)
+    if value:
+        return value
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
-GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
+    try:
+        import streamlit as st
+
+        if name in st.secrets:
+            return st.secrets[name]
+    except Exception:
+        pass
+
+    return default
+
+
+PINECONE_API_KEY = _get_secret("PINECONE_API_KEY")
+PINECONE_INDEX = _get_secret("PINECONE_INDEX", "mcqcreator")
+PINECONE_CLOUD = _get_secret("PINECONE_CLOUD", "aws")
+PINECONE_REGION = _get_secret("PINECONE_REGION", "us-east-1")
+HF_TOKEN = _get_secret("HF_TOKEN")
+
+GROQ_API_KEY = _get_secret("GROQ_API_KEY")
+GROQ_MODEL = _get_secret("GROQ_MODEL", "llama-3.1-8b-instant")
+GROQ_BASE_URL = _get_secret("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
 
 
 @lru_cache
