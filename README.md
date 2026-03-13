@@ -1,6 +1,6 @@
 # Exam Content Generator from PDFs
 
-This project generates exam content from uploaded PDF files using a simple RAG pipeline.
+A RAG-based Streamlit app that turns PDFs into MCQs, short notes, flashcards, and viva Q&A using LangChain, Pinecone, and Groq.
 
 ## Features
 - Upload one or more PDFs
